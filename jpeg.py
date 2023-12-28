@@ -177,7 +177,7 @@ def decode():
         wav_file.setnchannels(1)
         wav_file.setsampwidth(2)
         wav_file.setframerate(sample_rate)
-        wav_file.setnframes(len(first_channel))
+        wav_file.setnframes(len(reconstructed_channel))
         wav_file.writeframes(audio_bytes)
 
 encode(first_channel_blocks)    
