@@ -6,6 +6,9 @@ from collections import defaultdict
 import wave
 import array
 
+# name : youssif tamer seliem
+# section : 5
+# academic number : 1900494
 
 huffman_codes_list=[]
 encoded_data_list=[]
@@ -124,7 +127,7 @@ num_blocks_row = first_channel.shape[0] // block_size[0]
 num_blocks_col = first_channel.shape[1] // block_size[1]
 
 # Reshape the matrix into blocks
-first_channel_blocks = first_channel[:num_blocks_row * block_size[0], :num_blocks_col * block_size[1]].reshape(num_blocks_row, block_size[0], num_blocks_col, block_size[1])
+channel_blocks = first_channel[:num_blocks_row * block_size[0], :num_blocks_col * block_size[1]].reshape(num_blocks_row, block_size[0], num_blocks_col, block_size[1])
 
 def encode(channel):
     for i in range(num_blocks_row):
@@ -180,5 +183,6 @@ def decode():
         wav_file.setnframes(len(reconstructed_channel))
         wav_file.writeframes(audio_bytes)
 
-encode(first_channel_blocks)    
+
+encode(channel_blocks)    
 decode()

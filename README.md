@@ -1,28 +1,56 @@
-# JPEG-compression-for-Audio
+# Audio Compression using Huffman Coding and DCT
 
-> this algorithm takes the idea of JPEG compression on images to be applied to audio
+## Prerequisites
 
-## procedure
+Make sure you have the required Python packages installed:
 
-#### Encoding
-- The wav file used is mono (with one channal)
-- the samples of the audio file is represented in list
-- convert it to square matrix 
-- you need padding with zeros to make sure that the matrix is square
-- the rest will be the process close to JPEG for image
-- start by divide the matrix into blocks of shape (8,8)
-- then apply DCT to get the frequenct coefficients on each block
-- divide each block by the quantization matrix (for this reason this algorithm is lossy)
-- then you can apply any lossless compression method (we applied huffman coding)
+```bash
+pip install numpy scipy
+```
 
+## Usage
 
-#### Decoding
-- you will do the previous steps but reversed
-- start bt reversing the lossless compression
-- then multiply the resulting blocks by the quantization matrix
-- then apply IDCT(Inverse DCT) on the blocks
-- now you have a blocks, we will combine them to form a big square matrix
-- turn this channel into a list
-- remove the padded zeros to get the pure data
-- write this data into wave file
-- Congratz, you reconstructed the wav file successfully
+1. **Clone the repository:**
+```bash
+git clone https://github.com/YoussifSeliem/JPEG-compression-for-Audio
+cd JPEG-compression-for-Audio
+```
+
+2. **Run the script:**
+```bash
+python jpeg.py
+```
+The script will compress and decompress the audio data, generating a reconstructed sound file.
+
+## Overview
+
+### File Structure
+
+- **jpeg.py:** The main Python script containing the compression and decompression logic.
+- **input.wav:** Input audio file (replace with your own audio file).
+- **compressed_output:** Output directory to store compressed data.
+- **reconstructed_sound.wav:** Output directory to store compressed data.
+
+### Compression Process
+
+1. **Sound Processing:** The input audio file is processed to extract the first channel and convert it into a 2D matrix.
+2. **Block Processing:** The matrix is reshaped into blocks.
+3. **DCT:** DCT is applied to each block.
+4. **Quantization:** The DCT coefficients are quantized using a predefined quantization matrix.
+5. **Zigzag Ordering:** The quantized coefficients are zigzag ordered.
+5. **Huffman Coding:** Then Huffman coding is applied to the resulting sequence from the zigzag ordering.
+6. **Output to File:** The Huffman codes and encoded data are written to an output file.
+
+### Decompression Process
+
+1. **Huffman Decoding:** Huffman codes are used to decode the compressed data.
+2. **Inverse Zigzag Ordering:** Inverse zigzag is apllied to the sequence to get the quantized block back.
+3. **Reverse Quantization:** The quantized coefficients are reconstructed using the quantization matrix.
+4. **Inverse DCT:** Inverse DCT is applied to each block to obtain the reconstructed matrix.
+5. **Reconstructing The Matrix:** The set blocks are recombined to form the matrix containing all blocks.
+5. **Output Reconstruction:** The reconstructed matrix is converted back to a 1D array and saved to a new audio file.
+
+## Customization
+
+- Replace **input.wav** with your own audio file.
+- Adjust parameters like the quantization matrix, block size, and file paths based on your requirements.
